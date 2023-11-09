@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="classpath:application.properties" />
+
+    <bean id="address" class="com.example.Address">
+        <qualifier value="mainAddress" />
+        <property name="street" value="${address.street}" />
+        <property name="city" value="${address.city}" />
+    </bean>
+
+    <bean id="person" class="com.example.Person">
+        <property name="name" value="${person.name}" />
+        <property name="address" ref="address" />
+    </bean>
+
+    <bean id="employee" class="com.example.Employee">
+        <constructor-arg value="${employee.name}" />
+        <constructor-arg ref="person" />
+    </bean>
+
+    <bean id="company" class="com.example.Company">
+        <property name="name" value="${company.name}" />
+        <property name="employee" ref="employee" />
+    </bean>
+</beans>
